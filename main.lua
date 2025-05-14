@@ -35,8 +35,14 @@ function love.draw()
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.setFont(gameFont)
-    love.graphics.print(score, 0, 0)
-    love.graphics.print(math.ceil(timer), 300, 0)
+    love.graphics.print("Score: " .. score, 5, 5)
+    love.graphics.print("Time: " .. math.ceil(timer), 300, 5)
+
+    if gameState == 1 then
+        love.graphics.printf(
+            "Click anywhere to begin", 0, 250, love.graphics.getWidth(), "center"
+        )
+    end
 
     if gameState == 2 then
         love.graphics.draw(sprites.target, target.x - target.radius, target.y - target.radius)
@@ -56,6 +62,8 @@ function love.mousepressed(x, y, button, istouch, presses)
             target.y = math.random(
                 target.radius , love.graphics.getHeight() - target.radius
             )
+        elseif score > 0 then
+            score = score - 1
         end
     elseif button == 1 and gameState == 1 then
         gameState = 2
